@@ -9,7 +9,7 @@ Source Code
 ===========
 
 This analysis was made with MAF and is in an `iPython notebook
-<https://github.com/lsst-sims/smtn-004/_static/rotationDithering.ipynb>`_
+<https://github.com/lsst-sims/smtn-004/blob/master/_static/rotationDithering.ipynb>`_
 that can be viewed on GitHub.
 
 Results
