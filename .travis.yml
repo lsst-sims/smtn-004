@@ -1,8 +1,20 @@
 sudo: false
 language: python
-python:
-      - 3.4
-install: "pip install -r requirements.txt"
-script: "make html"
-notifications:
-      email: false
+matrix:
+  include:
+    - python: "3.5"
+      env: LTD_MASON_BUILD=true
+install:
+  - pip install -r requirements.txt
+  - pip install "ltd-mason>=0.2,<0.3"
+script:
+  - sphinx-build -b html -a -n -d _build/doctree . _build/html
+after_success:
+  - ltd-mason-travis --html-dir _build/html
+env:
+  global:
+    - LTD_MASON_BUILD=false  # disable builds in regular text matrix
+    - LTD_MASON_PRODUCT="smtn-004"
+    # Add AWS and LTD Keeper credentials as encrypted secrets here
+    - secure: "jfH5+FNwPf6rZEBx32teNo1tHRXx16mfR3iqh6CAdZYVMpVPwY/46EveuaQmjbypC5JiE7+bsVlc1iH2BuQTI1USDzxeBMeTCeLTlP8I08w5+eDSVmCXaBLy9tNUzv+vh8X1vRwgh3N9vhG9SeytZaYkaTm7Eo4pmkyxEqiEYZEUCwolT/BTj86rOSB/R/sU5qZX6mZDh8GCSuxZKjyUgXlyqsYDipdgOvKMNTkfoB/h0dRX3s8l3MgXCevJ1BJORwMChT1Xt9eBtwHj2FZrTwQfHglckMJFjAHzbvNk+mJZr8De4ynrFvAkT+dmZ3DjuSmMhbV8kn4mDrCZruGfin15aaUPiZ9Vz9q2Bz+9vB1z519PmBIRiLLD0APhJhKMwrJ1Vs3byI0mNF2xSRMoq+2vhKDaiTWLwHA4oq7Ns5rlMVlYgvxqd5YmAWkiwjCPSa6wcq7slgrz/tve+9DFr+/K9dQW7TsfhB5nNV+zBm7h8XzpfR2/4mSW782pkhaYuxEgi+OhzmY1t3fwJnTVKEg/NarmrJomE7EzcerSRqGaH24b44KPhcgIpFBFZ2h4lDi8xaKPxeYe0MGVAgyp/acsSPMUyCkSWidRg8OBLZzAyzser44QGqElOPHKJwmkH2zsYFxo9KwDxzNX9SVKZMwgmTUXvaRxVFTE1iXAfko="
+    - secure: "TlD/vTE6kTU7ljm1u2EPL2icjFor6XCci/kClr2qEeJ4IYZU/8RU6N8AsfwXupUWeI/WfAsyhpZ3TLJORcciUY/tTycNeiP3zT9xku0QzVOC+fXQflrmcjIaIwBkWxTwMSnMBTTn12JWTYLtga3peiRnqr7DJibtgXoite0OTR1SDddj/A+WShzFzffGiJxHAdHSHmEyTWjV0YHeSNCwxmtcFSphJ1F3vqX9ywUnJ8BNLVOMy7uwnhqiQNGdYzcOfRtIyBbu5rojU0YX3wLX/wkj1ZyO3DvIejj5Ft2SmryrADLVjTs6Yz3LE/J1w/kHvY7GIUgpRH8PJJSm5VJPD9GiT9Gxt1+eYX/gb//+Yb04IlG9qcHP/GwE7bZXPebfTkasU9PVg5U2a2TyHmNF2xy4BHRAF7m30PjEFs8rRMTuWyf4U0S7gTFg8bYXdH1kmy8cQ3C6SAl2xNzns6/Xnu3A4JF4/Z2d3oJidbsqyLdR2DQu6DsKlDwxACEXmB9LkIOwEewbQsSu03MGCvsk86BejNoi82SXhNb7f7IPjH1xKPbBOtJNHjuLt28JVFxtiiWa0zMGEwnll+nmP8rNRhwx0wYK0C01Jax5v1mJeww7/Z24kuoSuuS957w+VtEn/QME70Nr8FrYwR9mMcBb2nUVmQ0689suPnAG87Vt4Ik="
